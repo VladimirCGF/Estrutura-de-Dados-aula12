@@ -6,8 +6,7 @@ public class ArvoreBinaria {
     public ArvoreBinaria() {
         this.raiz = null;
     }
-
-    // Métodos de Inserção
+    
     public void inserir(int valor) {
         raiz = inserirRecursivo(raiz, valor);
     }
