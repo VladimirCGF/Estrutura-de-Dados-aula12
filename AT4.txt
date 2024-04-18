@@ -1,0 +1,149 @@
+public class Main {
+
+    public static void main(String[] args) {
+
+        PilhaEstatica pilha = new PilhaEstatica(5);
+        pilha.push(10);
+        pilha.push(20);
+        pilha.push(30);
+        pilha.imprimir();
+        System.out.println("Tamanho da pilha: " + pilha.tamanho());
+        System.out.println("Pilha vazia? " + pilha.vazia());
+        System.out.println("Pilha cheia? " + pilha.cheia());
+        pilha.pop();
+        pilha.imprimir();
+
+        FilaEstatica fila = new FilaEstatica(5);
+        fila.remove(10);
+        fila.remove(20);
+        fila.remove(30);
+        fila.imprimir();
+        System.out.println("Tamanho da fila: " + fila.tamanho());
+        System.out.println("Fila vazia? " + fila.vazia());
+        System.out.println("Fila cheia? " + fila.cheia());
+        fila.remove();
+        fila.imprimir();
+    }
+}
+
+class PilhaEstatica {
+
+    private final int tamanhoMaximo;
+    private int topo;
+    private Object[] dados;
+
+    public PilhaEstatica(int tamanho) {
+        this.tamanhoMaximo = tamanho;
+        this.topo = -1;
+        this.dados = new Object[tamanho];
+    }
+
+    public void push(Object dado) {
+        if (cheia()) {
+            throw new RuntimeException("Pilha cheia!");
+        }
+        topo++;
+        dados[topo] = dado;
+    }
+
+    public void pop() {
+        if (vazia()) {
+            throw new RuntimeException("Pilha vazia!");
+        }
+        Object dadoRemovido = dados[topo];
+        topo--;
+    }
+
+    public int tamanho() {
+        return topo + 1;
+    }
+
+    public boolean vazia() {
+        return topo == -1;
+    }
+
+
+    public boolean cheia() {
+        return topo == tamanhoMaximo - 1;
+    }
+
+    public void imprimir() {
+        if (vazia()) {
+            System.out.println("Pilha vazia!");
+            return;
+        }
+        for (int i = topo; i >= 0; i--) {
+            System.out.println(dados[i]);
+        }
+    }
+}
+
+class FilaEstatica {
+    private final int tamanhoMaximo;
+    private int inicio;
+    private int fim;
+    private Object[] dados;
+
+    public FilaEstatica(int tamanho) {
+        this.tamanhoMaximo = tamanho;
+        this.inicio = 0;
+        this.fim = -1;
+        this.dados = new Object[tamanho];
+    }
+
+    public void remove(Object dado) {
+        if (cheia()) {
+            throw new RuntimeException("Fila cheia!");
+        }
+        fim++;
+        if (fim == tamanhoMaximo) {
+            fim = 0;
+        }
+        dados[fim] = dado;
+    }
+
+    public void remove() {
+        if (vazia()) {
+            throw new RuntimeException("Fila vazia!");
+        }
+        Object dadoRemovido = dados[inicio];
+        inicio++;
+        if (inicio == tamanhoMaximo) {
+            inicio = 0;
+        }
+    }
+
+    public int tamanho() {
+        if (fim >= inicio) {
+            return fim - inicio + 1;
+        } else {
+            return tamanhoMaximo - inicio + fim + 1;
+        }
+    }
+
+    public boolean vazia() {
+        return inicio == fim + 1;
+    }
+
+    public boolean cheia() {
+        return (fim + 1) % tamanhoMaximo == inicio;
+    }
+
+    public void imprimir() {
+        if (vazia()) {
+            System.out.println("Fila vazia!");
+            return;
+        }
+        int i = inicio;
+        while (i != fim) {
+            System.out.println(dados[i]);
+            i++;
+            if (i == tamanhoMaximo) {
+                i = 0;
+            }
+        }
+        System.out.println(dados[fim]);
+    }
+}
+
+
